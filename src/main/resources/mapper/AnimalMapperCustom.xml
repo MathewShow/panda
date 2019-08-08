@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.animal.panda.mapper.AnimalMapperCustom">
+
+  <!--  分页sql -->
+  <sql id="limitByPage">
+    limit #{page.start},#{page.pageSize}
+  </sql>
+
+  <!--  批量删除一段animal -->
+  <delete id="batchDeleteAnimalCustom">
+        delete from animal t where t.id >= #{id}
+  </delete>
+
+  <!--  批量插入数据 -->
+  <insert id="batchSaveAnimal" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    insert into animal  values
+    <foreach collection="animalList" item="animal" index="index" separator=",">
+        (#{animal.id},#{animal.name},#{animal.age},#{animal.birthday},#{animal.description},#{animal.type})
+    </foreach>
+
+  </insert>
+
+  <select id="queryIds" resultType="java.lang.Integer">
+    select id from animal where 1=1
+    <if test="startId!=null">
+      and id >= #{startId}
+    </if>
+
+    <if test="endId!=null">
+      and id <![CDATA[<=]]> #{endId}
+    </if>
+  </select>
+
+  <delete id="batchDeleteByForeach" parameterType="java.util.List">
+    delete from animal where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+
+  </delete>
+
+  <update id="batchUpdate" parameterType="java.util.List">
+
+    <foreach collection="ids" item="id" index="index" open="" close="" separator=";">
+      update animal
+      <set>
+        age = 5
+      </set>
+      <where>
+        id = ${id}
+      </where>
+    </foreach>
+
+  </update>
+
+  <insert id="batchInsertType" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    insert into animal_type  (type_text) values
+    <foreach collection="list" index="index" item="animalType" separator=",">
+      (#{animalType.typeText})
+    </foreach>
+
+  </insert>
+
+  <select id="queryAnimalAndTypeByPageCount" parameterType="com.animal.panda.pojo.Animal" resultType="java.lang.Integer">
+        select count(1) from animal t
+        join animal_type atype on atype.id = t.type
+        where 1=1
+        <if test="animal.name!=null and animal.name!='' ">
+            and t.name like  CONCAT('%',#{animal.name},'%')
+        </if>
+        <if test="animal.type!=null">
+            and t.type = type
+        </if>
+  </select>
+
+  <!--  limit #{page.start},#{page.pageSize} -->
+  <select id="queryAnimalAndTypeByPageList" resultType="com.animal.panda.pojo.Animal">
+    select t.*,atype.type_text as typeText from animal t
+    join animal_type atype on atype.id = t.type
+    where 1=1
+    <if test="animal.name!=null and animal.name!='' ">
+      and t.name like   CONCAT('%',#{animal.name},'%')
+    </if>
+    <if test="animal.type!=null">
+      and t.type = type
+    </if>
+    <include refid="limitByPage"/>
+  </select>
+
+
+</mapper>
