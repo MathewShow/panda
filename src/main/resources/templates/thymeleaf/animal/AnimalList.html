@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #tab{
+            border:1px solid #F00
+        }
+        #tab td{
+            border:1px solid #666666;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <table id="tab">
+        <tr>
+            <th>名字</th>
+            <th>年龄</th>
+            <th>生日</th>
+            <th>描述</th>
+            <th>类型</th>
+        </tr>
+
+        <tr th:if="${page.count!=0}" th:each="animal:${page.list}" >
+            <td th:text="${animal.name}"></td>
+            <td th:text="${animal.age}"></td>
+            <td th:text="${#dates.format(animal.birthday,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${animal.description}"></td>
+            <td th:text="${animal.typeText}"></td>
+
+            <td th:if="${animal.age} == 18">十八岁的天空</td>
+            <td th:if="${animal.age} gt 18">你老了</td>
+            <td th:if="${animal.age} lt 18">你很年轻</td>
+            <td th:if="${animal.age} ge 18">大于等于</td>
+            <td th:if="${animal.age} le 18">小于等于</td>
+        </tr>
+        <tr th:if="${page.count==0}">暂无数据</tr>
+
+    </table>
+</div>
+</body>
+</html>

@@ -70,7 +70,7 @@
             and t.name like  CONCAT('%',#{animal.name},'%')
         </if>
         <if test="animal.type!=null">
-            and t.type = type
+            and t.type = #{animal.type}
         </if>
   </select>
 
@@ -83,7 +83,7 @@
       and t.name like   CONCAT('%',#{animal.name},'%')
     </if>
     <if test="animal.type!=null">
-      and t.type = type
+      and t.type = #{animal.type}
     </if>
     <include refid="limitByPage"/>
   </select>
