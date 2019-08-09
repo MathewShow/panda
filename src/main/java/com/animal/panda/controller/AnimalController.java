@@ -5,6 +5,7 @@ import com.animal.panda.pojo.AnimalType;
 import com.animal.panda.pojo.IMoocJSONResult;
 import com.animal.panda.pojo.PageHelperCustom;
 import com.animal.panda.service.AnimalService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -221,6 +222,22 @@ public class AnimalController {
 
         return IMoocJSONResult.ok(page);
     }
+
+    /**
+     * 关联查询 并且分页
+     * @return
+     */
+    @RequestMapping("/queryAnimalByPageHelper")
+    @ResponseBody
+    public IMoocJSONResult queryAnimalByPageHelper(PageHelperCustom<Animal> page, Animal animal){
+
+        page = animalService.queryAnimalByPageHelper(page,animal);
+
+
+        return IMoocJSONResult.ok(page);
+    }
+
+
 
 
 

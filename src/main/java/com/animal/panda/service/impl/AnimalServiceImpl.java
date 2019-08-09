@@ -6,7 +6,9 @@ import com.animal.panda.pojo.Animal;
 import com.animal.panda.pojo.AnimalType;
 import com.animal.panda.pojo.PageHelperCustom;
 import com.animal.panda.service.AnimalService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -147,13 +149,36 @@ public class AnimalServiceImpl implements AnimalService {
     @Override
     public PageHelperCustom<Animal> queryAnimalAndTypeByPage(PageHelperCustom<Animal> page , Animal animal) {
 
-        int count = animalMapperCustom.queryAnimalAndTypeByPageCount(animal);
+        long count = animalMapperCustom.queryAnimalAndTypeByPageCount(animal);
         page.setCount(count);
         if (count==0){
             return page;
         }
         List<Animal> list = animalMapperCustom.queryAnimalAndTypeByPageList(animal,page);
         page.setList(list);
+        return page;
+    }
+
+
+    /**
+     * 通过PageHelper实现分页
+     * @param page
+     * @param animal
+     * @return
+     */
+    @Override
+    public PageHelperCustom<Animal> queryAnimalByPageHelper(PageHelperCustom<Animal> page, Animal animal) {
+
+        PageHelper.startPage(page.getPageNum(),page.getPageSize(),false);
+        List<Animal> list = animalMapperCustom.queryAnimalAndTypeByPageHelperList(animal);
+
+        long count = new PageInfo<>(list).getTotal();//获取总数
+        page.setCount(count);
+        page.setList(list);
+
+        /*Page page1 = (Page)list;  这种方式也可以直接得到 count总数
+        System.out.println("page1>>>>>>>>>>"+page1.getTotal());*/
+
         return page;
     }
 
