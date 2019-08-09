@@ -11,7 +11,7 @@ public class JdbcMain {
         String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
         String DB_URL = "jdbc:mysql://localhost:3306/panda?useSSL=false&serverTimezone=Asia/Shanghai";
         String DB_USERNAME = "root";
-        String DB_PASSWORD = "123";
+        String DB_PASSWORD = "root";
 
         try {
             Class.forName(DB_DRIVER);
