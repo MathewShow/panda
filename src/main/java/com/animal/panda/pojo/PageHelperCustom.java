@@ -20,6 +20,9 @@ public class PageHelperCustom<T> {
     private List<T> list;
 
     public Integer getPageNum() {
+        if (pageNum==null){
+            pageNum=1;
+        }
         return pageNum;
     }
 

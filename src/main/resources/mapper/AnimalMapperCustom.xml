@@ -62,7 +62,7 @@
 
   </insert>
 
-  <select id="queryAnimalAndTypeByPageCount" parameterType="com.animal.panda.pojo.Animal" resultType="java.lang.Integer">
+  <select id="queryAnimalAndTypeByPageCount" parameterType="com.animal.panda.pojo.Animal" resultType="java.lang.Long">
         select count(1) from animal t
         join animal_type atype on atype.id = t.type
         where 1=1

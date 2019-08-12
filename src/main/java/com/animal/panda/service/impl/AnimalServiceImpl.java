@@ -169,7 +169,7 @@ public class AnimalServiceImpl implements AnimalService {
     @Override
     public PageHelperCustom<Animal> queryAnimalByPageHelper(PageHelperCustom<Animal> page, Animal animal) {
 
-        PageHelper.startPage(page.getPageNum(),page.getPageSize(),false);
+        PageHelper.startPage(page.getPageNum(),page.getPageSize());
         List<Animal> list = animalMapperCustom.queryAnimalAndTypeByPageHelperList(animal);
 
         long count = new PageInfo<>(list).getTotal();//获取总数
