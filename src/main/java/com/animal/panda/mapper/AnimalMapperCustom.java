@@ -23,7 +23,9 @@ public interface AnimalMapperCustom  {
 
     void batchInsertType(@Param("list") List<AnimalType> list);
 
-    int queryAnimalAndTypeByPageCount(@Param("animal") Animal animal);
+    long queryAnimalAndTypeByPageCount(@Param("animal") Animal animal);
 
     List<Animal> queryAnimalAndTypeByPageList(@Param("animal") Animal animal,@Param("page") PageHelperCustom<Animal> page);
+
+    List<Animal> queryAnimalAndTypeByPageHelperList(@Param("animal") Animal animal);
 }

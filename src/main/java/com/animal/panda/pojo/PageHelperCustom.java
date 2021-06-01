@@ -15,11 +15,14 @@ public class PageHelperCustom<T> {
     /** 每页展示记录数 */
     private Integer pageSize;
     /** 总记录数 */
-    private Integer count;
+    private Long count;
     /** 返回数据 */
     private List<T> list;
 
     public Integer getPageNum() {
+        if (pageNum==null){
+            pageNum=1;
+        }
         return pageNum;
     }
 
@@ -28,6 +31,9 @@ public class PageHelperCustom<T> {
     }
 
     public Integer getPageSize() {
+        if (pageSize==null || pageSize<=0){
+            pageSize=10;
+        }
         return pageSize;
     }
 
@@ -35,16 +41,16 @@ public class PageHelperCustom<T> {
         this.pageSize = pageSize;
     }
 
-    public Integer getCount() {
+    public Long getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(Long count) {
         if (pageSize==null || pageSize<1){
             pageSize = 10;
         }
-        int remainder = count % pageSize;//余数
-        pageCount = remainder==0?count/pageSize:count/pageSize+1;
+        int remainder = (int)( count % pageSize);//余数
+        pageCount = remainder==0?(int)(count/pageSize):(int)(count/pageSize+1);
         
         if (pageNum==null || pageNum<1){
             pageNum = 1;

@@ -5,6 +5,7 @@ import com.animal.panda.pojo.AnimalType;
 import com.animal.panda.pojo.IMoocJSONResult;
 import com.animal.panda.pojo.PageHelperCustom;
 import com.animal.panda.service.AnimalService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,12 +61,13 @@ public class AnimalController {
      */
     @RequestMapping("/batchSave")
     @ResponseBody
-    public IMoocJSONResult batchSaveAnimal(Animal entity){
+    public IMoocJSONResult batchSaveAnimal(Animal entity,Integer count){
+        if (count==null) count=1000;
         long s = System.currentTimeMillis();
         List<Animal> animals = new ArrayList<>();
         String[] strArr = {"饭","懵","萌萌","蠢蠢","小","大","宝","咕咕","面条","饭桶","月","阳","槑槑"};
 
-        for (int i = 0; i <1000 ; i++) {
+        for (int i = 0; i <count ; i++) {
             int num1 = (int) (Math.random() * strArr.length);
             int num2= (int) (Math.random() * strArr.length);
             int num3= (int) (Math.random() * 15+1);
@@ -221,6 +223,22 @@ public class AnimalController {
 
         return IMoocJSONResult.ok(page);
     }
+
+    /**
+     * 关联查询 并且分页
+     * @return
+     */
+    @RequestMapping("/queryAnimalByPageHelper")
+    @ResponseBody
+    public IMoocJSONResult queryAnimalByPageHelper(PageHelperCustom<Animal> page, Animal animal){
+
+        page = animalService.queryAnimalByPageHelper(page,animal);
+
+
+        return IMoocJSONResult.ok(page);
+    }
+
+
 
 
 

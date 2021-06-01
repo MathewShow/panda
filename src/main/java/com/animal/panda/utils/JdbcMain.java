@@ -9,16 +9,16 @@ public class JdbcMain {
 
     public static void main(String[] args) {
         String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
-        String DB_URL = "jdbc:mysql://localhost:3306/panda?useSSL=false&serverTimezone=Asia/Shanghai";
+        String DB_URL = "jdbc:mysql://192.168.2.159:3306/panda?useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true";
         String DB_USERNAME = "root";
-        String DB_PASSWORD = "123";
+        String DB_PASSWORD = "root";
 
         try {
             Class.forName(DB_DRIVER);
             Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
             Statement statement = connection.createStatement();
             //statement.execute("USE `world`");
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM `animal`");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM `animal` limit 10");
             while(resultSet.next()) {
                 System.out.println(resultSet.getString("Name"));
             }

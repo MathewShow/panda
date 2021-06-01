@@ -62,7 +62,7 @@
 
   </insert>
 
-  <select id="queryAnimalAndTypeByPageCount" parameterType="com.animal.panda.pojo.Animal" resultType="java.lang.Integer">
+  <select id="queryAnimalAndTypeByPageCount" parameterType="com.animal.panda.pojo.Animal" resultType="java.lang.Long">
         select count(1) from animal t
         join animal_type atype on atype.id = t.type
         where 1=1
@@ -70,7 +70,7 @@
             and t.name like  CONCAT('%',#{animal.name},'%')
         </if>
         <if test="animal.type!=null">
-            and t.type = type
+            and t.type = #{animal.type}
         </if>
   </select>
 
@@ -83,9 +83,21 @@
       and t.name like   CONCAT('%',#{animal.name},'%')
     </if>
     <if test="animal.type!=null">
-      and t.type = type
+      and t.type = #{animal.type}
     </if>
     <include refid="limitByPage"/>
+  </select>
+
+  <select id="queryAnimalAndTypeByPageHelperList" resultType="com.animal.panda.pojo.Animal">
+    select t.*,atype.type_text as typeText from animal t
+    join animal_type atype on atype.id = t.type
+    where 1=1
+    <if test="animal.name!=null and animal.name!='' ">
+      and t.name like   CONCAT('%',#{animal.name},'%')
+    </if>
+    <if test="animal.type!=null">
+      and t.type = #{animal.type}
+    </if>
   </select>
 
 

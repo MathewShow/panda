@@ -22,4 +22,5 @@ public interface AnimalService {
     void batchUpdate(List<Integer> ids);
     void batchInsertType(List<AnimalType> list);
     PageHelperCustom<Animal> queryAnimalAndTypeByPage(PageHelperCustom<Animal> page,Animal animal);
+    PageHelperCustom<Animal> queryAnimalByPageHelper(PageHelperCustom<Animal> page, Animal animal);
 }

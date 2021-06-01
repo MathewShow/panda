@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    姓名：<input th:id="${animal.name}" th:name="${animal.name}" th:value="${animal.name}"/>
+    <br/>
+    年龄：<input th:value="${animal.age}"/>
+    <br/>
+    生日：<input th:value="${animal.birthday}"/>
+    <br/>
+    生日：<input th:value="${#dates.format(animal.birthday, 'yyyy-MM-dd')}"/>
+    <br/>
+    描述：<input th:value="${animal.description}"/>
+    <br/>
+    类型：<input th:value="${animal.typeText}"/>
+    <br/>
+    URL:<br/>
+    <a href="" th:href="@{http://www.imooc.com}">网站地址</a>
+    <br/>
+</div>
+</body>
+</html>
