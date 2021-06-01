@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 public class AnimalServiceImpl implements AnimalService {
 
+
     //@Autowired
     /**
      * 当使用@Autowired注解的时候，其实默认就是@Autowired(required=true)，表示注入的时候，该bean必须存在，
